@@ -1,0 +1,29 @@
+body {
+    color: #000;
+    // user-select: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 12em;
+  }
+  
+.hdrbg {
+   background-color: rgb(29, 62, 103);
+   color: #FFF;
+}
+
+.currencyValue {
+  width: 110px;
+} 
+
+button.maintab {
+  background-color: none;
+  color: #FFF;
+}
+.maintab a, .maintab a:link, .maintab a:visited {
+  color: #FFF;
+}
+
+.Mui-selected.maintab {
+  background: #FFF;
+}
+
