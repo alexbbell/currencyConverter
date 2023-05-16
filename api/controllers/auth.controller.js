@@ -1,4 +1,3 @@
-//const db = require('./../config/db.config');
 const User = require('./../models/user.model');
 const bcrypt = require("bcryptjs");
 const config = require("../config/auth.config");
@@ -27,7 +26,7 @@ exports.signin = (req, res) => {
                 return res.status(404).send( { message: "User not found" });
             };               
 
-            console.log(bcrypt.de)
+            //console.log(bcrypt.de)
             var passwordIsValid = bcrypt.compareSync(
                 req.body.password,
                 user.password

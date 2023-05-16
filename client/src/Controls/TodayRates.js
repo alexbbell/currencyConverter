@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 
 import CurrencyFlag from 'react-currency-flags'
 import { useSelector } from 'react-redux'
-import { currentRates } from '../Helpers/AppSettings'
 import { Divider, Typography } from '@mui/material'
 import { getTodayRates } from '../Helpers/Services'
 
@@ -33,8 +32,8 @@ export default function TodayRates (props) {
         Object.keys(todayRates).map((option, index) => (
           <Box sx={{ mx: 2 }} key={option} value={option} >
             <Box sx={{
-              height: 30,
-              pt: 1,
+              height: 35,
+              py: 1,
 
               display: 'flex',
               justifyContent: 'space-between'

@@ -31,6 +31,10 @@ module.exports = function(app) {
     controller.TodayRates
   );
 
+  app.get("/api/currency/history/:srcCur/:dstCur/:period",
+    [authJwt.verifyToken],
+    controller.HistoricalRates
+  );
 
 }
 

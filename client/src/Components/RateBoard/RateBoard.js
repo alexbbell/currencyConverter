@@ -11,34 +11,23 @@ import TodayRates from '../../Controls/TodayRates'
 
 import PropTypes from 'prop-types'
 import HistoricalDates from '../HistoricalDates'
-import { currencies } from '../../Helpers/AppSettings'
 
-export default function RateBoard() {
-  const [items, setItems] = useState([])
+export default function RateBoard () {
   const srcCurrency = useSelector(state => state.auth.currency)
   const [operationResult, setOperationResult] = useState(false)
   const [value, setValue] = React.useState(0)
 
-  const currencyKeys = Object.keys(currencies.data)
-
   useEffect(() => {
     const fetchData = async () => {
-      LoadPosts()
       setOperationResult(true)
     }
     fetchData()
   }, [operationResult])
 
-  const LoadPosts = async () => {
-    const mode = 'prod' // prod | dev
-    let json
-    return json
-  }
-
-  function a11yProps(index) {
+  function a11yProps (index) {
     return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`
+      id: `rateboard-tab-${index}`,
+      'aria-controls': `rateboard-tabpanel-${index}`
     }
   }
 
@@ -46,15 +35,15 @@ export default function RateBoard() {
     setValue(newValue)
   }
 
-  function TabPanel(props) {
+  function TabPanel (props) {
     const { children, value, index, ...other } = props
 
     return (
       <div
         role="tabpanel"
         hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
+        id={`rateboard-tabpanel-${index}`}
+        aria-labelledby={`rateboard-tab-${index}`}
         {...other}
       >
         {value === index && (
@@ -73,28 +62,39 @@ export default function RateBoard() {
   return (
 
     <>
-      <br />
-      <br />
-
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ pt: 10 }}>
         <Grid xs={8}>
 
           <Box sx={{ borderBottom: 1, borderColor: 'divider', height: 50 }} className='hdrbg'>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Currency converter" {...a11yProps(0)} />
-              <Tab label="Historical rates" {...a11yProps(1)} />
+              <Tab label="Currency converter" {...a11yProps(0)} className='maintab' />
+              <Tab label="Historical rates" {...a11yProps(1)} className='maintab' />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
             <Card variant="outlined">
               <RatesConverter />
-
-              <HistoricalDates />
             </Card>
           </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Card variant="outlined">
+              <HistoricalDates />
+
+            </Card>
+          </TabPanel>
+
         </Grid>
         <Grid xs={4}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: 1, borderColor: 'divider', height: 50, margin: 'auto', padding: 'auto' }} className='hdrbg'>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottom: 1,
+            borderColor: 'divider',
+            height: 50,
+            margin: 'auto',
+            padding: 'auto'
+          }} className='hdrbg'>
             <Box sx={{ flexDirection: 'row', paddingLeft: '10px' }}>Today Rates</Box>
             <Box sx={{ flexDirection: 'row', paddingRight: '10px' }}>1 {srcCurrency}=</Box>
           </Box>

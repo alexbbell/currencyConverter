@@ -33,3 +33,18 @@ export const getTodayRates = (srcCurrency, token) => {
       console.log('Error getTodayRates', error)
     })
 }
+
+export const getHistoricalRates = (srcCurrency, dstCurrency, period, token) => {
+  const url = `${apiUrl}api/currency/history/${srcCurrency}/${dstCurrency}/${period}`
+  return axios.get(url, {
+    headers: {
+      'x-access-token': token
+    }
+  }).then((result) => {
+    return result.data
+  })
+    .catch(function (error) {
+      // handle error
+      console.log('Error getTodayRates', error)
+    })
+}

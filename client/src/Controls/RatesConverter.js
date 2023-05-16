@@ -8,21 +8,21 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { currencies } from '../Helpers/AppSettings'
 import { getRateFromApi } from '../Helpers/Services'
-import { switchCurrency } from '../store/userSlice'
+import { switchCurrency, switchDestCurrency } from '../store/userSlice'
 
 export default function RatesConverter (props) {
-  const [sourceValue, setSourceValue] = useState(1000)
-  const [sourceCurrency, setSourceCurrency] = useState('USD')
-  const [destValue, setDestValue] = useState(1000)
-  const [destCurrency, setDestCurrency] = useState('EUR')
-  const [currentRate, setCurrentRate] = useState()
   const token = useSelector(state => state.auth.token)
+  const srcCurrency = useSelector(state => state.auth.currency)
+  const dstCurrency = useSelector(state => state.auth.dstCurrency)
+  const [sourceValue, setSourceValue] = useState(1000.00)
+  const [sourceCurrency, setSourceCurrency] = useState(srcCurrency)
+  const [destValue, setDestValue] = useState(1000)
+  const [destCurrency, setDestCurrency] = useState(dstCurrency)
+  const [currentRate, setCurrentRate] = useState()
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // setSourceCurrency('USD')
-
     const fetchRate = async () => {
       const cRate = await GetRateFromService(sourceCurrency, destCurrency)
       CalculateAmount(cRate, sourceValue)
@@ -60,14 +60,13 @@ export default function RatesConverter (props) {
     const cRate = await GetRateFromService(sourceCurrency, newDstCurrency)
     CalculateAmount(cRate, sourceValue)
     setDestCurrency(newDstCurrency)
+    dispatch(
+      switchDestCurrency(newDstCurrency)
+    )
   }
 
   const updateSourceValue = (event) => {
-    // event.preventDefault()
-    // /\.?.\./gm
-    // const regex = /^[0-9]+$/;
     const regex = /(^[0-9\.?]+$)/gm
-
     let srcValue = event.target.value
     if (regex.test(srcValue)) {
       srcValue = srcValue.replace('..', '.')
@@ -99,7 +98,7 @@ export default function RatesConverter (props) {
 
     </Box>
 
-    <Box>
+    <Box display={'flex'} sx={{ flexDirection: 'row' }}>
       <TextField id="outlined-basic" label="From"
         variant="outlined" className='currencyValue'
         inputMode="numeric" pattern="[0-9]*"
@@ -111,6 +110,7 @@ export default function RatesConverter (props) {
         id="outlined-select-currency"
         select
         onChange={changeSourceCurrency}
+        fullWidth
         value={sourceCurrency} defaultValue={sourceCurrency}
       >
 
@@ -125,7 +125,7 @@ export default function RatesConverter (props) {
       </TextField>
     </Box>
 
-    <Box>
+    <Box display={'flex'} sx={{ flexDirection: 'row' }}>
       <TextField id="outlined-basic" label="To"
         variant="outlined" className='currencyValue'
         value={destValue} aria-readonly='true'
@@ -139,6 +139,7 @@ export default function RatesConverter (props) {
         id="outlined-select-currency" select
         value={destCurrency}
         onChange={changeDestCurrency}
+        fullWidth
       >
         {
           Object.keys(currencies.data).map(option => (
@@ -153,9 +154,7 @@ export default function RatesConverter (props) {
       <br />
       Your rate:
       <h2>{sourceCurrency} 1 = {destCurrency} {currentRate}</h2>
-      <br />
-      <br />
-      Dest:  {destValue}
+
   </Box>
 
   )

@@ -15,3 +15,15 @@ body {
   width: 110px;
 } 
 
+button.maintab {
+  background-color: none;
+  color: #FFF;
+}
+.maintab a, .maintab a:link, .maintab a:visited {
+  color: #FFF;
+}
+
+.Mui-selected.maintab {
+  background: #FFF;
+}
+
