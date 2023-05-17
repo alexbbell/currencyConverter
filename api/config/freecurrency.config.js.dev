@@ -1,0 +1,16 @@
+
+exports.freeCurrencyConfig = () => {
+    return {        
+        apikey: 'the_secret_API_KEY',
+        host: 'https://api.freecurrencyapi.com/v1/'
+    }
+}
+
+exports.defaultTodayCurrancies = () => {
+  return  ['EUR', 'GBP', 'CAD', 'MXN', 'JPY']
+}
+
+exports.mode = () => {
+  //mode is "dev" for tests || "prod" for production
+  return "prod";
+}
